@@ -139,7 +139,20 @@ def test_list_choice_ids():
 
     assert question._list_choice_ids() == [c1.id, c2.id, c3.id]
 
+@pytest.fixture
+def question_prototype():
+    question = Question(title='q1')
 
+    c1 = question.add_choice('a', True)
+    c2 = question.add_choice('b', False)
+    c3 = question.add_choice('c', False)
 
+    return question
 
-    
+def test_choices_added(question_prototype):
+    assert len(question_prototype.choices) == 3   
+
+def test_remove_all_choices_using_fixture(question_prototype):
+    assert len(question_prototype.choices) == 3  
+    question_prototype.remove_all_choices()
+    assert len(question_prototype.choices) == 0
